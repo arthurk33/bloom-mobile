@@ -22,7 +22,7 @@ export default class StoreDisplay extends React.Component {
           <View styles={styles.cardHeader}>
             <Image
               style={styles.image}
-              source={require('../assets/images/salon.jpeg')}
+              source={this.props.route.params.store.pictures[0]}
             />
           </View>
           <View style={styles.cardBottom}>

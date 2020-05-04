@@ -79,6 +79,61 @@ export default class SearchForm extends React.Component {
       selectedItemDistance: selectedItemPassed
     })
   };
+
+  async getPictures(prefixPassed) {
+    console.log("GETTING INTO THE PICTURES FUNCTION")
+    const response = await fetch('http://192.168.1.24:8081/getImages', {
+        method: "POST",
+        headers: {
+            'Content-type': 'application/json'
+        },
+        // credentials: 'include',
+        body: JSON.stringify({prefix: prefixPassed})
+      })
+      .then(function(response){
+        if(response.status!==200){
+          // throw an error alert
+          console.log("ERROR!", response)
+        }
+        else{
+          return response.json();
+        }
+      })
+      .then(data => {
+        if(data){
+          return data
+        }
+      });    
+
+    return response
+  }
+
+  async getServices(store_id){
+    let response = await fetch('http://192.168.1.24:8081/stores/' + store_id + "/services/", {
+      method: "GET",
+      headers: {
+          'Content-type': 'application/json'
+      },
+      // credentials: 'include'
+    })
+    .then(function(response){
+      if(response.status!==200){
+        // throw an error alert
+        console.log("ERROR!")
+      }
+      else{
+        return response.json();
+      }
+    })
+    .then(data => {
+      if(data){
+        console.log("SERVICES:", data)
+        return data
+      }
+    });
+
+    return response
+  }
   
   
 
@@ -103,6 +158,8 @@ export default class SearchForm extends React.Component {
 
       let modifiedState = modifyState(this.state)
       let query = queryString(modifiedState)
+      let getPictures = this.getPictures
+      let getServices = this.getServices
       
       fetch('http://192.168.1.24:8081/stores' + query, {
         headers: {
@@ -118,8 +175,18 @@ export default class SearchForm extends React.Component {
           return response.json()
         }
       })
-      .then(data => {
+      .then(async data => {
         if(data){
+          if(data.stores.length > 0){
+            for(let i = 0; i < data.stores.length; i++){
+              let pictures = await getPictures('stores/' + data.stores[i].id + '/images/')
+              let services = await getServices(data.stores[i].id)
+
+              data.stores[i].pictures = pictures
+              data.stores[i].services = services
+            }
+          }
+
           this.props.navigation.navigate('SearchDisplay', {
             stores: data.stores,
             center: data.center

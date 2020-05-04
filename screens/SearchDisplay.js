@@ -19,71 +19,13 @@ export default class SearchDisplay extends React.Component {
     
     this.showStore = this.showStore.bind(this)
   }
-
-  async getPictures(prefixPassed) {
-    const response = await fetch('http://localhost:8081/getImages', {
-        method: "POST",
-        headers: {
-            'Content-type': 'application/json'
-        },
-        // credentials: 'include',
-        body: JSON.stringify({prefix: prefixPassed})
-      })
-    const picturesResp = await response.json()
   
-    this.setState(prevState => ({
-      stores: prevState.stores.map(
-        el => el.id === store_id? { ...el, pictures: picturesResp }: el
-      )
-    }))
-  }
-
-  async getServices(store_id){
-    await fetch('http://192.168.1.24:8081/stores/' + store_id + "/services/", {
-      method: "GET",
-      headers: {
-          'Content-type': 'application/json'
-      },
-      // credentials: 'include'
-    })
-    .then(function(response){
-      if(response.status!==200){
-        // throw an error alert
-        console.log(JSON.stringify(response))
-      }
-      else{
-        return response.json();
-      }
-    })
-    .then(data => {
-      if(data){
-        console.log("SERVICES:", data)
-        this.setState(prevState => ({
-          stores: prevState.stores.map(
-            el => el.id === store_id? { ...el, services: data }: el
-          )
-        }))
-      }
-    });
-  }
-
-  async componentDidMount(){
-    let user = JSON.parse(await this.getData(user))
-    this.setState({
-      user: user
-    })
-    // for(let i = 0; i < this.props.route.params.stores.length; i++){
-    //   await this.getPictures('stores/' + this.props.route.params.stores[i].id + '/images/')
-    //   await this.getServices(this.props.route.params.stores[i].id)
-    // }
-  }
-
   // CITATION: https://stackoverflow.com/questions/52392725/changing-segment-content-onpress
   selectComponent = (activePage) => () => this.setState({activePage})
 
   _renderComponent = () => {
     if(this.state.activePage === 2){
-      return <Map stores={this.props.route.params.stores} navigation={this.props.navigation}/>
+      return <Map stores={this.props.route.params.stores} navigation={this.props.navigation} center={this.props.route.params.center}/>
     }
     else {
       return <SearchCards stores={this.props.route.params.stores} navigation={this.props.navigation}/>

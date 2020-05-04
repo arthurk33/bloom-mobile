@@ -28,8 +28,7 @@ export default class SearchCards extends React.Component{
                 <View styles={styles.cardHeader}>
                   <Image
                     style={styles.image}
-                    // source={item.pictures[0]}
-                    source={require('../assets/images/salon.jpeg')}
+                    source={item.pictures[0]}
                   />
                 </View>
                 <View style={styles.cardBottom}>
