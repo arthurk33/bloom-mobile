@@ -132,8 +132,6 @@ export default class AppointmentsScreen extends Component {
             </CardItem>
           </Card>
         </Content>
-
-        {footer}
       </Container>
     )
   }

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {TouchableOpacity, View, Image, Text, StyleSheet, FlatList} from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
+import { Linking } from 'expo';
 
 export default class SearchCards extends React.Component{
   constructor(props) {
