@@ -5,38 +5,44 @@ import {
 // import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { YellowBox } from 'react-native'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Card, CardItem } from 'native-base';
+import {connect} from 'react-redux'
 
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested', // TODO: Remove when fixed
 ])
 
-export default class AccountScreen extends Component {
+class AccountScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: null
-    };
   }
+
+  async componentDidUpdate(prevProps, prevState){
+    if (prevProps.user !== this.props.user) {
+      this.setState({
+        update: true
+      })
+    }
+   }
 
  render() {
    let info = null
-   if(this.state.user){
+   if(this.props.user){
     info = <View>
       <CardItem>
               <Text>
-                {this.state.user.first_name} {this.state.user.last_name}
+                Name: {this.props.user.first_name} {this.props.user.last_name}
               </Text>
             </CardItem>
 
             <CardItem>
               <Text>
-                {this.state.user.email}
+                Email: {this.props.user.email}
               </Text>
             </CardItem>
 
             <CardItem>
               <Text>
-                {this.state.user.phone} {this.state.user.phone}
+                Phone: {this.props.user.phone}
               </Text>
             </CardItem>
     </View>
@@ -64,3 +70,11 @@ export default class AccountScreen extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+      user: state.userReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(AccountScreen);
