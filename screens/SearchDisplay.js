@@ -19,7 +19,7 @@ export default class SearchDisplay extends React.Component {
     
     this.showStore = this.showStore.bind(this)
   }
-  
+
   // CITATION: https://stackoverflow.com/questions/52392725/changing-segment-content-onpress
   selectComponent = (activePage) => () => this.setState({activePage})
 
@@ -67,11 +67,8 @@ export default class SearchDisplay extends React.Component {
     return (
       <Container>
         <Header hasSegment>
-          <Left>
-            {userSession}
-          </Left>
           <Body>
-            <Segment>
+            <Segment style={{marginLeft: 100}}>
               <Button 
                 first 
                 active={this.state.activePage === 1}

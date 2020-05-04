@@ -98,7 +98,7 @@ class HomeScreen extends Component {
       <Container>
         <Header>
           <Left>
-            {userSession}
+            {/* {userSession} */}
           </Left>
           <Body>
             <Title>Bloom</Title>
@@ -111,12 +111,6 @@ class HomeScreen extends Component {
             <CardItem>
               <SearchForm navigation={this.props.navigation}/>
             </CardItem>
-            <Button transparent onPress={() => this.props.navigation.navigate('Appointments')}>
-              <Text>Appointments</Text>
-            </Button>
-            <Button transparent onPress={() => this.props.navigation.navigate('Account')}>
-              <Text>Account</Text>
-            </Button>
           </Card>
         </Content>
       </Container>

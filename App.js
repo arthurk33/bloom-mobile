@@ -1,11 +1,12 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-// import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { SplashScreen } from 'expo';
 // import * as Font from 'expo-font';
 // import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // import BottomTabNavigator from './navigation/BottomTabNavigator';
 import HomeScreen from './screens/Home';
@@ -23,13 +24,64 @@ import AccountScreen from './screens/Account'
 // import DropDownHolder from './components/Dropdown'
 
 
+const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+
+function HomeStack() {
+  return <Stack.Navigator 
+    screenOptions={{ 
+      headerShown: false,
+      transitionConfig : () => ({
+        transitionSpec: {
+          duration: 0,
+          timing: Animated.timing,
+          easing: Easing.step0,
+        },
+      }),
+    }}
+    
+    transparentCard={true}
+  >
+    <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Screen name="SearchDisplay" component={SearchDisplayScreen} />
+    <Stack.Screen name="StoreDisplay" component={StoreDisplayScreen}/>
+  </Stack.Navigator>
+}
+
+async function getData() {
+  try {
+    const value = await AsyncStorage.getItem('@user')
+    if(value !== null) {
+      return value
+    }
+    else{
+      return null
+    }
+  } catch(e) {
+    console.log("error getting user:", e)
+    return null
+  }
+}
+
+async function handleLogout(){
+  try {
+    await AsyncStorage.removeItem('@user');
+    this.setState({
+      user: null
+    })
+  }
+  catch(e) {
+    console.log(e)
+  }
+}
+
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
+  const [user, setUser] = React.useState()
 
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
@@ -39,6 +91,7 @@ export default function App(props) {
 
         // Load our initial navigation state
         setInitialNavigationState(await getInitialState());
+        setUser(await getData())
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
@@ -54,32 +107,28 @@ export default function App(props) {
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
   } else {
+    let login;
+    let signup;
+    let appointments;
+    let account;
+    if(user){
+      appointments = <Drawer.Screen name="Appointments" component={AppointmentsScreen}/>
+      account = <Drawer.Screen name="Account" component={AccountScreen}/>
+      logout = <Drawer.Screen name="Logout" component={handleLogout}/>
+    }
+    else{
+      login = <Drawer.Screen name="Login" component={LoginScreen} />
+      signup = <Drawer.Screen name="Signup" component={SignupScreen} />
+    }
     return (
           <NavigationContainer ref={containerRef} initialState={initialNavigationState} backgroundColor={"transparent"}>
-            {/* <DropdownAlert ref={(ref) => DropDownHolder.setDropDown(ref)}/> */}
-            <Stack.Navigator 
-              screenOptions={{ 
-                headerShown: false,
-                transitionConfig : () => ({
-                  transitionSpec: {
-                    duration: 0,
-                    timing: Animated.timing,
-                    easing: Easing.step0,
-                  },
-                }),
-              }}
-              
-              transparentCard={true}
-            >
-              <Stack.Screen name="root" component={HomeScreen} />
-              <Stack.Screen name="SearchForm" component={SearchFormScreen} />
-              <Stack.Screen name="SearchDisplay" component={SearchDisplayScreen} />
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Signup" component={SignupScreen} />
-              <Stack.Screen name="StoreDisplay" component={StoreDisplayScreen}/>
-              <Stack.Screen name="Appointments" component={AppointmentsScreen}/>
-              <Stack.Screen name="Account" component={AccountScreen}/>
-            </Stack.Navigator>
+            <Drawer.Navigator>
+              <Drawer.Screen name="Home" component={HomeStack} />
+              {login}
+              {signup}
+              {appointments}
+              {account}
+            </Drawer.Navigator>
           </NavigationContainer>
     );
   }

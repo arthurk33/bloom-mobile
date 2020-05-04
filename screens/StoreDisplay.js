@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, TextInput, View, Image, TouchableOpacity, FlatList } from 'react-native';
-import { Container, Header, Content, List, ListItem, Text } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Button, Left, Icon } from 'native-base';
 import categories from '../components/Categories'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Linking } from 'expo';

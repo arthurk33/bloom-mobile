@@ -115,7 +115,9 @@ export default class AppointmentsScreen extends Component {
       <Container>
         <Header>
           <Left>
-            {userSession}
+            <Button transparent onPress={() => this.props.navigation.goBack()}t>
+              <Icon name='arrow-back' />
+            </Button>
           </Left>
           <Body>
             <Title>Bloom</Title>

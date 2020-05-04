@@ -64,7 +64,7 @@ export default class Login extends React.Component {
               .then(async(data) => {
                 if(data){
                   await this.storeData(data)
-                  this.props.navigation.navigate('root', {update: true})
+                  this.props.navigation.navigate('Home', {update: true})
                 }
                 else{
                   actions.setSubmitting(false);

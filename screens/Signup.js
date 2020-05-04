@@ -66,7 +66,7 @@ export default class Signup extends React.Component {
               })
               .then(data => {
                 if(data){
-                  this.props.navigation.navigate('root')
+                  this.props.navigation.navigate('Home')
                 }
                 else{
                   actions.setSubmitting(false);
