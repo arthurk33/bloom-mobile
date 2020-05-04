@@ -8,6 +8,9 @@ import FormInput from '../components/FormInput'
 import FormButton from '../components/FormButton'
 import ErrorMessage from '../components/ErrorMessage'
 import { AsyncStorage } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {login} from '../redux/redux'
 
 
 const validationSchema = Yup.object().shape({
@@ -21,17 +24,25 @@ const validationSchema = Yup.object().shape({
     .min(6, 'Password must be at least 6 characters '),
 })
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   goToSignup = () => this.props.navigation.navigate('Signup')
 
-  storeData = async (data) => {
-    try {
-      await AsyncStorage.setItem('@user', JSON.stringify(data.user))
-      // localStorage.set(JSON.string('token', data.token)
-      // createCookie('token' data.token);
-      // await AsyncStorage.setItem('@token', JSON.stringify(data.token))
-    } catch (e) {
-      console.log("error setting user", e)
+  // storeData = async (data) => {
+  //   try {
+  //     await AsyncStorage.setItem('@user', JSON.stringify(data.user))
+  //     // localStorage.set(JSON.string('token', data.token)
+  //     // createCookie('token' data.token);
+  //     // await AsyncStorage.setItem('@token', JSON.stringify(data.token))
+  //   } catch (e) {
+  //     console.log("error setting user", e)
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState)  {
+    // means we updated redux store with the user and have successfully logged in
+    if (prevProps.user !== this.props.user) {
+      console.log("REDIRECTING TO HOME")
+      this.props.navigation.navigate('Home')
     }
   }
 
@@ -43,33 +54,8 @@ export default class Login extends React.Component {
           validationSchema={validationSchema}
           onSubmit={async (values, actions) => {
             if (values.email.length > 0 && values.password.length > 0) {
-              fetch('http://192.168.1.24:8081/login' , {
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                method: "POST",
-                body: JSON.stringify({
-                  "email": values.email,
-                  "password": values.password
-                })
-              })
-              .then(function(response){
-                if(response.status!==200){
-                  alert("Invalid email/password!");
-                }
-                else{
-                  return response.json()
-                }
-              })
-              .then(async(data) => {
-                if(data){
-                  await this.storeData(data)
-                  this.props.navigation.navigate('Home', {update: true})
-                }
-                else{
-                  actions.setSubmitting(false);
-                }
-              })
+              console.log("TRYING TO LOG IN")
+              this.props.loginUser(values.email, values.password, "")
             }
           }}
           >
@@ -122,6 +108,17 @@ export default class Login extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  user: state.userReducer.user
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  loginUser: (email, password) => login(email, password)
+}, dispatch)
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   container: {

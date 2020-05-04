@@ -39,61 +39,45 @@ class HomeScreen extends Component {
   // }
 
   async componentDidUpdate(prevProps){
-    if(prevProps != this.props){
-      let user = JSON.parse(await this.getData(user))
-      this.setState({
-        user: user
-      })
-    }
+    console.log("HOME UPDATED!", this.props)
   }
 
   async componentDidMount(){
-    let user = JSON.parse(await this.getData(user))
-    this.setState({
-      user: user
-    })
+    console.log("HOME MOUNTED")
+    // let user = JSON.parse(await this.getData(user))
+    // this.setState({
+    //   user: user
+    // })
   }
 
-  getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@user')
-      if(value !== null) {
-        return value
-      }
-      else{
-        return null
-      }
-    } catch(e) {
-      console.log("error getting user:", e)
-      return null
-    }
-  }
+  // getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('@user')
+  //     if(value !== null) {
+  //       return value
+  //     }
+  //     else{
+  //       return null
+  //     }
+  //   } catch(e) {
+  //     console.log("error getting user:", e)
+  //     return null
+  //   }
+  // }
 
-  async handleLogout(){
-    try {
-      await AsyncStorage.removeItem('@user');
-      this.setState({
-        user: null
-      })
-    }
-    catch(e) {
-      console.log(e)
-    }
-  }
+  // async handleLogout(){
+  //   try {
+  //     await AsyncStorage.removeItem('@user');
+  //     this.setState({
+  //       user: null
+  //     })
+  //   }
+  //   catch(e) {
+  //     console.log(e)
+  //   }
+  // }
 
  render() {
-   let userSession = null
-   if(this.state.user == null){
-     userSession =  <Button transparent onPress={() => this.props.navigation.navigate('Login')}>
-                  <Text>Login</Text>
-                </Button>
-
-   }
-   else{
-    userSession =  <Button transparent onPress={() => this.handleLogout()}>
-                  <Text>Logout</Text>
-                </Button>
-   }
     return (
       <Container>
         <Header>

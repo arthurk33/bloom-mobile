@@ -1,14 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, View, Text, Image, TouchableOpacity, Linking, AsyncStorage } from 'react-native';
-import { ScrollView, FlatList } from 'react-native-gesture-handler';
-import { useState } from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Card, CardItem, Segment } from 'native-base';
+import { Container, Header, Title, Text, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Card, CardItem, Segment } from 'native-base';
 import Map from '../components/Map'
 import SearchCards from '../components/SearchCards'
-
-
-// import Card from '../components/Panel';  // Step 1
+import { YellowBox } from 'react-native'
+YellowBox.ignoreWarnings([
+  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+])
 
 export default class SearchDisplay extends React.Component {
   constructor(props) {
@@ -32,38 +29,11 @@ export default class SearchDisplay extends React.Component {
     }
   }
 
-  getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@user')
-      if(value !== null) {
-        return value
-      }
-      else{
-        return null
-      }
-    } catch(e) {
-      console.log("error getting user:", e)
-      return null
-    }
-  }
-
   showStore(store){
     console.log(store)
   }
 
   render (){
-    let userSession = null
-    if(this.state.user == null){
-      userSession =  <Button transparent onPress={() => this.props.navigation.navigate('Login')}>
-                    <Text>Login</Text>
-                  </Button>
-
-    }
-    else{
-      userSession =  <Button transparent onPress={() => this.handleLogout()}>
-                    <Text>Logout</Text>
-                  </Button>
-    }
     return (
       <Container>
         <Header hasSegment>

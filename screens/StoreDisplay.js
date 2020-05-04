@@ -50,7 +50,6 @@ export default class StoreDisplay extends React.Component {
 
     Object.keys(actualServices).forEach((key) => (actualServices[key].length == 0) && delete actualServices[key]); 
 
-    console.log(actualServices)
     this.setState({
       actualServices: actualServices,
       keys: Object.keys(actualServices)
