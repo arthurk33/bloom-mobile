@@ -90,7 +90,7 @@ export default class StoreDisplay extends React.Component {
                     <FlatList
                         showsVerticalScrollIndicator='false'
                         data={this.state.actualServices[item]}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => "store" + item.id}
                         renderItem={({ item }) => (
                             <ListItem itemDivider id={"servce-" + item.id}>
                               <Text>Service: {item.name}{"\n\n"}{item.description}{"\n\n"}{"$" + item.cost}{"\n\n"}{item.duration + " minutes"}</Text>

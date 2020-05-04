@@ -7,9 +7,9 @@ import { StyleSheet, SafeAreaView, View, Alert, Picker } from 'react-native'
 // import FormInput from '../components/FormInput'
 import FormButton from '../components/FormButton'
 // import ErrorMessage from '../components/ErrorMessage'
-// import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import MultiSelect from 'react-native-multiple-select';
-// import { GOOGLE_API_KEY } from 'react-native-dotenv'
+// import Config from 'react-native-config'
 
 
 // const validationSchema = Yup.object().shape({
@@ -81,7 +81,6 @@ export default class SearchForm extends React.Component {
   };
 
   async getPictures(prefixPassed) {
-    console.log("GETTING INTO THE PICTURES FUNCTION")
     const response = await fetch('http://192.168.1.24:8081/getImages', {
         method: "POST",
         headers: {
@@ -127,7 +126,6 @@ export default class SearchForm extends React.Component {
     })
     .then(data => {
       if(data){
-        console.log("SERVICES:", data)
         return data
       }
     });
@@ -207,7 +205,7 @@ export default class SearchForm extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <Fragment>
-          {/* <GooglePlacesAutocomplete
+          <GooglePlacesAutocomplete
             name="address"
             placeholder='Search'
             minLength={2} // minimum length of text to search
@@ -236,7 +234,7 @@ export default class SearchForm extends React.Component {
             
             query={{
               // available options: https://developers.google.com/places/web-service/autocomplete
-              key: GOOGLE_API_KEY,
+              // key: Config.GOOGLE_API_KEY,
               language: 'en', // language of the results
             }}
             
@@ -266,7 +264,7 @@ export default class SearchForm extends React.Component {
             // debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
             // renderLeftButton={()  => <Image source={require('path/custom/left-icon')} />}
             // renderRightButton={() => <Text>Custom text after the input</Text>}
-          /> */}
+          />
 
           <View style={{ flex: 1 }}>
             <MultiSelect
