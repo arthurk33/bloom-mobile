@@ -9,6 +9,7 @@ import FormButton from '../components/FormButton'
 // import ErrorMessage from '../components/ErrorMessage'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import MultiSelect from 'react-native-multiple-select';
+import categories from '../components/Categories'
 // import Config from 'react-native-config'
 
 
@@ -41,25 +42,12 @@ export default class SearchForm extends React.Component {
       selectedItemDistance: []
     };
 
-    // options for store categories
-    this.options = [
-      { id: 'nails', name: 'Nails' },
-      { id: 'hair', name: 'Hair' },
-      { id: 'makeup', name: 'Makeup' },
-      { id: 'eyelashes', name: 'Eyelashes' },
-      { id: 'eyelashExtensions', name: 'Eyelash Extensions' },
-      { id: 'eyebrows', name: 'Eyebrows' },
-      { id: 'facials', name: 'Facials' },
-      { id: 'skincare', name: 'Skin Care' },
-      { id: 'waxing', name: 'Waxing' },
-      { id: 'mens', name: 'Mens Services' }
-    ];
-
     this.optionsDistance = [
       { id: "1", name: '1 mile' },
       { id: "5", name: '5 miles' },
       { id: "10", name: '10 miles' },
       { id: "25", name: '25 miles' },
+      { id: "50", name: '50 miles' }
     ];
 
     this.onSelectedItemsChange = this.onSelectedItemsChange.bind(this);
@@ -141,16 +129,12 @@ export default class SearchForm extends React.Component {
         return {
           address: state.address,
           distance: parseInt(state.selectedItemDistance[0]),
-          nails: state.selectedItems.includes("nails"),
-          hair: state.selectedItems.includes("hair"),
-          makeup: state.selectedItems.includes("makeup"),
-          eyelashes: state.selectedItems.includes("eyelashes"),
-          eyelashExtensions: state.selectedItems.includes("eyelashExtensions"),
-          eyebrows: state.selectedItems.includes("eyebrows"),
-          facials: state.selectedItems.includes("facials"),
-          skincare: state.selectedItems.includes("skincare"),
-          waxing: state.selectedItems.includes("waxing"),
-          mens: state.selectedItems.includes("mens"),
+          nails: state.selectedItems.includes("Nails"),
+          hair: state.selectedItems.includes("Hair"),
+          makeup: state.selectedItems.includes("Makeup"),
+          facials: state.selectedItems.includes("Facials"),
+          barber: state.selectedItems.includes("Barber"),
+          spa: state.selectedItems.includes("Spa"),
         }
       }
 
@@ -234,7 +218,7 @@ export default class SearchForm extends React.Component {
             
             query={{
               // available options: https://developers.google.com/places/web-service/autocomplete
-              // key: Config.GOOGLE_API_KEY,
+              key: '',
               language: 'en', // language of the results
             }}
             
@@ -295,8 +279,8 @@ export default class SearchForm extends React.Component {
           <View style={{ flex: 1 }}>
             <MultiSelect
               hideTags
-              items={this.options}
-              uniqueKey="id"
+              items={categories}
+              uniqueKey="key"
               ref={(component) => { this.multiSelect = component }}
               onSelectedItemsChange={this.onSelectedItemsChange}
               selectedItems={this.state.selectedItems}
@@ -310,7 +294,7 @@ export default class SearchForm extends React.Component {
               selectedItemTextColor="#CCC"
               selectedItemIconColor="#CCC"
               itemTextColor="#000"
-              displayKey="name"
+              displayKey="value"
               searchInputStyle={{ color: '#CCC' }}
               submitButtonColor="#CCC"
               submitButtonText="Done"

@@ -4,7 +4,7 @@ const categories = [
   {key: "Hair", value: "Hair Salon"},
   {key: "Barber", value: "Barbershops"}, 
   {key: "Facials", value: "Facials"}, 
-  {key: "Spa", values: "Spa & Wellness"}, 
+  {key: "Spa", value: "Spa & Wellness"}, 
   {key: "Makeup", value: "Makeup"}]
 
 export default categories

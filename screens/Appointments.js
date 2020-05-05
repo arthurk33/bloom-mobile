@@ -62,7 +62,7 @@ export default class AppointmentsScreen extends Component {
           <Card>
             <CardItem>
               <Text>
-                Appointments go here
+                You have no appointments!
               </Text>
             </CardItem>
           </Card>
