@@ -11,6 +11,7 @@ import { AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {login} from '../redux/redux'
+import {Card} from 'native-base'
 
 
 const validationSchema = Yup.object().shape({
@@ -49,63 +50,64 @@ class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Formik
+        <Card style={{marginTop: 100, paddingTop: 20, paddingBottom: 20, marginLeft: -20, marginRight: -20, borderRadius: "10px"}}>
+          <Formik
 
-          initialValues={{ email: '', password: '' }}
-          validationSchema={validationSchema}
-          onSubmit={async (values, actions) => {
-            if (values.email.length > 0 && values.password.length > 0) {
-              console.log("TRYING TO LOG IN")
-              this.props.loginUser(values.email, values.password, "")
-            }
-          }}
-          >
-          {props => (
-            <Fragment>
-              <FormInput
+            initialValues={{ email: '', password: '' }}
+            validationSchema={validationSchema}
+            onSubmit={async (values, actions) => {
+              if (values.email.length > 0 && values.password.length > 0) {
+                console.log("TRYING TO LOG IN")
+                this.props.loginUser(values.email, values.password, "")
+              }
+            }}
+            >
+            {props => (
+              <Fragment>
+                <FormInput
+                  containerStyle={styles.input}
+                  name='email'
+                  value={props.values.email}
+                  onChangeText={props.handleChange('email')}
+                  placeholder='Email'
+                  autoCapitalize='none'
+                  iconName='mail-forward'
+                  iconColor='#2C384A'
+                  onBlur={props.handleBlur('email')}
+                  autoFocus
+
+                />
+                <ErrorMessage errorValue={props.touched.email && props.errors.email} />
+                <FormInput
                 containerStyle={styles.input}
-                name='email'
-                value={props.values.email}
-                onChangeText={props.handleChange('email')}
-                placeholder='Email'
-                autoCapitalize='none'
-                iconName='mail-forward'
-                iconColor='#2C384A'
-                onBlur={props.handleBlur('email')}
-                autoFocus
+                  name='password'
+                  value={props.values.password}
+                  onChangeText={props.handleChange('password')}
+                  placeholder='Password'
+                  secureTextEntry
+                  iconName='lock'
+                  iconColor='#2C384A'
+                  onBlur={props.handleBlur('password')}
+                />
+                <ErrorMessage errorValue={props.touched.password && props.errors.password}/>
 
-              />
-              <ErrorMessage errorValue={props.touched.email && props.errors.email} />
-              <FormInput
-              containerStyle={styles.input}
-                name='password'
-                value={props.values.password}
-                onChangeText={props.handleChange('password')}
-                placeholder='Password'
-                secureTextEntry
-                iconName='lock'
-                iconColor='#2C384A'
-                onBlur={props.handleBlur('password')}
-              />
-              <ErrorMessage errorValue={props.touched.password && props.errors.password}/>
+                <View style={styles.buttonContainer}>
+                  <TouchableHighlight
+                    onPress={props.handleSubmit}
+                    disabled={!props.isValid || props.isSubmitting}
+                  ><Text style={styles.button}>Login</Text></TouchableHighlight>
+                </View>
 
-              <View style={styles.buttonContainer}>
-                <TouchableHighlight
-                   onPress={props.handleSubmit}
-                   disabled={!props.isValid || props.isSubmitting}
-                ><Text style={styles.button}>Login</Text></TouchableHighlight>
-              </View>
-
-            </Fragment>
-          )}
-        </Formik>
-        <View style={{flexDirection: 'row', flex: 'display', alignSelf: 'center', marginTop: 10}}>
-        <Text style={{alignSelf: 'center', marginTop: 10, fontSize: 15}}> Don't have an account? </Text>
-          <TouchableHighlight
-             onPress={this.goToSignup}
-          ><Text style={styles.sign}>Sign Up</Text></TouchableHighlight>
+              </Fragment>
+            )}
+          </Formik>
+          <View style={{flexDirection: 'row', flex: 'display', alignSelf: 'center', marginTop: -10}}>
+            <Text style={{alignSelf: 'center', marginTop: 10, fontSize: 15}}> Don't have an account? </Text>
+            <TouchableHighlight
+              onPress={this.goToSignup}
+            ><Text style={styles.sign}>Sign Up</Text></TouchableHighlight>
           </View>
-
+        </Card>
       </View>
     )
   }
@@ -131,19 +133,19 @@ const styles = StyleSheet.create({
     paddingTop: '30%'
   },
   buttonContainer: {
-    marginTop: '10%',
+    margin: 25,
     backgroundColor: '#354A74',
-    width: '45%',
+    width: '30%',
     alignSelf: 'center',
-    height: '10%',
-    fontSize: 8,
-    borderRadius: 30
+    height: 40,
+    fontSize: 10,
+    borderRadius: 10
   },
   button: {
     fontSize:15,
     color: 'white',
     alignSelf: 'center',
-    padding: 10
+    paddingTop: 10,
   },
   sign: {
     color: 'blue',

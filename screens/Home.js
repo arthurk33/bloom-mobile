@@ -89,7 +89,7 @@ class HomeScreen extends Component {
 
  render() {
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header>
           <Left>
             {/* {userSession} */}
@@ -101,18 +101,9 @@ class HomeScreen extends Component {
         </Header>
 
         <Content>
-          <Card>
-
-              <SearchForm navigation={this.props.navigation}/>
-
+          <Card style={{marginTop: 200, marginLeft: 20, marginRight: 20, borderRadius: "5px"}}>
+            <SearchForm navigation={this.props.navigation}/>
           </Card>
-          <View style = {styles.switch}>
-            <Switch
-            onValueChange = {this.toggleSwitch}
-            value = {this.state.switchValue}
-            trackColor={{ false: "#767577", true: "#8794ab" }}
-            />
-         </View>
         </Content>
       </Container>
 
@@ -137,7 +128,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#C0CBCF',
+    height: '100%',
   },
   developmentModeText: {
     marginBottom: 20,

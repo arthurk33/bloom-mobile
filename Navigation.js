@@ -78,15 +78,12 @@ class Navigation extends React.Component {
       let signup;
       let appointments;
       let account;
-      let logout;
+
       if(!(this.props.user == null) && !(Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)){
-        console.log("WE HAVE A USER!")
         appointments = <Drawer.Screen name="Appointments" component={AppointmentsScreen}/>
         account = <Drawer.Screen name="Account" component={AccountScreen}/>
-        // logout = <Drawer.Screen name="Logout" component={LogoutScreen}/>
       }
       else{
-        console.log("NO USER!")
         login = <Drawer.Screen name="Login" component={LoginScreen} />
         signup = <Drawer.Screen name="Signup" component={SignupScreen} />
       }

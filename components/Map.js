@@ -11,14 +11,13 @@ export default class Map extends React.Component{
 
  render() {
     return (
-      // <Text>hi</Text>
       <MapView
         style={styles.map}
         initialRegion={{
           latitude: this.props.center == null ? 37.78825 : parseFloat(this.props.center.lat),
           longitude: this.props.center == null ? -122.4324 : parseFloat(this.props.center.lng),
           latitudeDelta: 0.0022,
-          longitudeDelta: 0.0821
+          longitudeDelta: 0.251
         }}
       >
         {this.props.stores == null ? null : this.props.stores.map((store, index) => {
@@ -36,7 +35,6 @@ export default class Map extends React.Component{
                   key={index}
                   coordinate={coords}
                   title={store.name}
-                  description={store.description}
                   onMarkerPress={() => {
                     this.props.navigation.navigate('StoreDisplay', {
                       store: store
@@ -56,6 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    height: '100%'
   },
   welcome: {
     fontSize: 20,
