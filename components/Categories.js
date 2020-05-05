@@ -1,4 +1,3 @@
-//FormButton.js
 const categories = [
   {key: "Nails", value: "Nail Salon"}, 
   {key: "Hair", value: "Hair Salon"},

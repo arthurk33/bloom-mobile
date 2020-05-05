@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, View, Image, TouchableOpacity, FlatList } from 'react-native';
-import { Container, Header, Content, List, ListItem, Text, Button, Left, Icon } from 'native-base';
+import { StyleSheet, View, Image, FlatList } from 'react-native';
+import { Content, ListItem, Text } from 'native-base';
 import categories from '../components/Categories'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Linking } from 'expo';
@@ -101,14 +101,6 @@ export default class StoreDisplay extends React.Component {
                   </View>
                 )}
             />
-
-            {/* <List 
-                dataArray={this.state.keys}
-                renderRow={(dictKey, index) =>
-                <ListItem key={"category" + index}>
-                  <Text>{this.state.actualServices[dictKey].name}</Text>
-                </ListItem>
-            }/> */}
           </Content>
         </View>
       </View>

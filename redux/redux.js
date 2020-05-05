@@ -25,13 +25,10 @@ export function login(email, password) {
     })
     .then(data => {
       if(data){
-        console.log("GOT THE DATA!")
         dispatch(addUser(data.user));
-        console.log("FINISHED ADDING!")
         return data;
       }
       else{
-        console.log("NO DATA!")
         return null
       }
     });
@@ -40,8 +37,6 @@ export function login(email, password) {
 
 export function logout() {
   return dispatch => {
-    console.log("LOGGING OUT IN THE REDUX FILE!")
     dispatch(removeUser());
-    console.log("DONE IN THE REDUX FILE!")
   }
 }

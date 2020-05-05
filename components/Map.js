@@ -2,7 +2,6 @@ import MapView from 'react-native-maps';
 import * as React from 'react'
 import { StyleSheet } from 'react-native'
 
-
 export default class Map extends React.Component{
   constructor(props) {
     super(props);
@@ -25,10 +24,6 @@ export default class Map extends React.Component{
               latitude: parseFloat(store.lat),
               longitude: parseFloat(store.lng),
           };
-
-          console.log(coords)
-
-          // const metadata = `Status: ${marker.statusValue}`;
 
           return (
               <MapView.Marker

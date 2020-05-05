@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import {
   View,
 } from 'react-native'
-// import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { YellowBox } from 'react-native'
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Card, CardItem } from 'native-base';
+import { YellowBox, StyleSheet } from 'react-native'
+import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Card, CardItem } from 'native-base';
 import {connect} from 'react-redux'
 
 YellowBox.ignoreWarnings([
@@ -28,7 +27,7 @@ class AccountScreen extends Component {
    let info = null
    if(this.props.user){
     info = <View>
-      <CardItem>
+            <CardItem>
               <Text>
                 Name: {this.props.user.first_name} {this.props.user.last_name}
               </Text>
@@ -45,10 +44,10 @@ class AccountScreen extends Component {
                 Phone: {this.props.user.phone}
               </Text>
             </CardItem>
-    </View>
+          </View>
    }
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header>
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}t>
@@ -62,7 +61,10 @@ class AccountScreen extends Component {
         </Header>
 
         <Content>
-          <Card>
+          <Card style={{marginTop: 40, paddingTop: 20, paddingBottom: 20, marginLeft: 20, marginRight: 20, borderRadius: "10px"}}>
+            <CardItem header>
+              <Text>Your Account:</Text>
+            </CardItem>
             {info}
           </Card>
         </Content>
@@ -70,6 +72,14 @@ class AccountScreen extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#C0CBCF',
+    height: '100%',
+  },
+})
 
 const mapStateToProps = (state) => {
   return {

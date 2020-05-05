@@ -4,8 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import HomeScreen from './screens/Home';
-// import useLinking from './navigation/useLinking';
-// import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchDisplayScreen from './screens/SearchDisplay';
 import LoginScreen from './screens/Login'
 import SignupScreen from './screens/Signup'

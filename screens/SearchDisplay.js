@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Container, Header, Title, Text, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Card, CardItem, Segment } from 'native-base';
+import { Container, Header, Content, Right, Body } from 'native-base';
 import Map from '../components/Map'
 import SearchCards from '../components/SearchCards'
 import { YellowBox, StyleSheet, View, Switch } from 'react-native'
+
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested', // TODO: Remove when fixed
 ])
@@ -56,7 +57,6 @@ export default class SearchDisplay extends React.Component {
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   switch: {

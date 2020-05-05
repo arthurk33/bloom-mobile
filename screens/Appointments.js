@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { YellowBox } from 'react-native'
+import { YellowBox, StyleSheet } from 'react-native'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Card, CardItem } from 'native-base';
-
 
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested', // TODO: Remove when fixed
@@ -45,7 +44,7 @@ export default class AppointmentsScreen extends Component {
 
  render() {
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header>
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}t>
@@ -59,7 +58,10 @@ export default class AppointmentsScreen extends Component {
         </Header>
 
         <Content>
-          <Card>
+          <Card style={{marginTop: 40, paddingTop: 20, paddingBottom: 20, marginLeft: 20, marginRight: 20, borderRadius: "10px"}}>
+            <CardItem header>
+              <Text>Your Appointments:</Text>
+            </CardItem>
             <CardItem>
               <Text>
                 You have no appointments!
@@ -71,3 +73,11 @@ export default class AppointmentsScreen extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#C0CBCF',
+    height: '100%',
+  },
+})

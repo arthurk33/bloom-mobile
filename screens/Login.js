@@ -1,13 +1,10 @@
 // CITATION: https://heartbeat.fritz.ai/build-and-validate-forms-in-react-native-using-formik-and-yup-6489e2dff6a2
 import React, { Fragment } from 'react'
 import { StyleSheet, SafeAreaView, View, Alert, Text, TouchableHighlight} from 'react-native'
-import { Button } from 'react-native-elements'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import FormInput from '../components/FormInput'
-import FormButton from '../components/FormButton'
 import ErrorMessage from '../components/ErrorMessage'
-import { AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {login} from '../redux/redux'
@@ -28,21 +25,9 @@ const validationSchema = Yup.object().shape({
 class Login extends React.Component {
   goToSignup = () => this.props.navigation.navigate('Signup')
 
-  // storeData = async (data) => {
-  //   try {
-  //     await AsyncStorage.setItem('@user', JSON.stringify(data.user))
-  //     // localStorage.set(JSON.string('token', data.token)
-  //     // createCookie('token' data.token);
-  //     // await AsyncStorage.setItem('@token', JSON.stringify(data.token))
-  //   } catch (e) {
-  //     console.log("error setting user", e)
-  //   }
-  // }
-
   componentDidUpdate(prevProps, prevState)  {
     // means we updated redux store with the user and have successfully logged in
     if (prevProps.user !== this.props.user) {
-      console.log("REDIRECTING TO HOME")
       this.props.navigation.navigate('Home')
     }
   }
@@ -52,7 +37,6 @@ class Login extends React.Component {
       <View style={styles.container}>
         <Card style={{marginTop: 100, paddingTop: 20, paddingBottom: 20, marginLeft: -20, marginRight: -20, borderRadius: "10px"}}>
           <Formik
-
             initialValues={{ email: '', password: '' }}
             validationSchema={validationSchema}
             onSubmit={async (values, actions) => {
@@ -74,7 +58,6 @@ class Login extends React.Component {
                   iconName='mail-forward'
                   iconColor='#2C384A'
                   onBlur={props.handleBlur('email')}
-                  autoFocus
 
                 />
                 <ErrorMessage errorValue={props.touched.email && props.errors.email} />

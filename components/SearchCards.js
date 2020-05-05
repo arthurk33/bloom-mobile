@@ -15,11 +15,6 @@ export default class SearchCards extends React.Component{
           data={this.props.stores}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            // <Card title='Customized Card 1' expanded={false}>
-            //     <Text>Hello, this is first line.</Text>
-            //     <Text>Hello, this is second line.</Text>
-            //     <Text>Hello, this is third line.</Text>
-            // </Card>
             <TouchableOpacity onPress={() => {
                 this.props.navigation.navigate('StoreDisplay', {
                   store: item

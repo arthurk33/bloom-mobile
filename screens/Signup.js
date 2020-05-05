@@ -1,10 +1,8 @@
 import React, { Fragment } from 'react'
-import { StyleSheet, SafeAreaView, View, TouchableOpacity, TouchableHighlight, Text} from 'react-native'
-import { Button } from 'react-native-elements'
+import { StyleSheet, View, TouchableHighlight, Text} from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import FormInput from '../components/FormInput'
-import FormButton from '../components/FormButton'
 import ErrorMessage from '../components/ErrorMessage'
 import {Card} from 'native-base'
 
@@ -97,7 +95,6 @@ export default class Signup extends React.Component {
                   iconName='user'
                   iconColor='#2C384A'
                   onBlur={handleBlur('name')}
-                  autoFocus
                 />
                 <ErrorMessage errorValue={touched.name && errors.name} />
                 <FormInput
@@ -186,7 +183,6 @@ const styles = StyleSheet.create({
   input: {
     height: 5,
     marginBottom: 30,
-    // width: '80%',
     alignSelf: 'center'
   },
   sign: {
