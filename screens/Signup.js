@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { StyleSheet, SafeAreaView, View } from 'react-native'
+import { StyleSheet, SafeAreaView, View, TouchableOpacity, TouchableHighlight, Text} from 'react-native'
 import { Button } from 'react-native-elements'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -38,7 +38,7 @@ export default class Signup extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Formik
           initialValues={{
             name: '',
@@ -87,6 +87,7 @@ export default class Signup extends React.Component {
           }) => (
             <Fragment>
               <FormInput
+                containerStyle={styles.input}
                 name='name'
                 value={values.name}
                 onChangeText={handleChange('name')}
@@ -98,6 +99,7 @@ export default class Signup extends React.Component {
               />
               <ErrorMessage errorValue={touched.name && errors.name} />
               <FormInput
+                containerStyle={styles.input}
                 name='email'
                 value={values.email}
                 onChangeText={handleChange('email')}
@@ -109,6 +111,7 @@ export default class Signup extends React.Component {
               />
               <ErrorMessage errorValue={touched.email && errors.email} />
               <FormInput
+                containerStyle={styles.input}
                 name='password'
                 value={values.password}
                 onChangeText={handleChange('password')}
@@ -120,6 +123,7 @@ export default class Signup extends React.Component {
               />
               <ErrorMessage errorValue={touched.password && errors.password} />
               <FormInput
+                containerStyle={styles.input}
                 name='password'
                 value={values.confirmPassword}
                 onChangeText={handleChange('confirmPassword')}
@@ -133,27 +137,22 @@ export default class Signup extends React.Component {
                 errorValue={touched.confirmPassword && errors.confirmPassword}
               />
               <View style={styles.buttonContainer}>
-                <FormButton
-                  buttonType='outline'
-                  onPress={handleSubmit}
-                  title='SIGNUP'
-                  buttonColor='#F57C00'
-                  disabled={!isValid || isSubmitting}
-                  loading={isSubmitting}
-                />
+                <TouchableHighlight
+                   onPress={handleSubmit}
+                   disabled={!isValid || isSubmitting}
+                   loading={isSubmitting}
+                ><Text style={styles.button}>Sign Up</Text></TouchableHighlight>
               </View>
             </Fragment>
           )}
         </Formik>
-        <Button
-          title='Have an account? Login'
-          onPress={this.goToLogin}
-          titleStyle={{
-            color: '#039BE5'
-          }}
-          type='clear'
-        />
-      </SafeAreaView>
+        <View style={{flexDirection: 'row', flex: 'display', alignSelf: 'center', marginTop: 10}}>
+        <Text style={{alignSelf: 'center', marginTop: 10, fontSize: 15}}> Have an account already? </Text>
+          <TouchableHighlight
+             onPress={this.goToLogin}
+          ><Text style={styles.sign}>Login</Text></TouchableHighlight>
+          </View>
+      </View>
     )
   }
 }
@@ -161,9 +160,38 @@ export default class Signup extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#C0CBCF',
+    height: '100%',
+    padding: '15%',
+    paddingTop: '30%',
+
+
   },
   buttonContainer: {
-    margin: 25
-  }
+    marginTop: '10%',
+    backgroundColor: '#354A74',
+    width: '45%',
+    alignSelf: 'center',
+    height: '10%',
+    fontSize: 8,
+    borderRadius: 30
+  },
+  button: {
+    fontSize:15,
+    color: 'white',
+    alignSelf: 'center',
+    padding: 10
+  },
+  input: {
+    height: 5,
+    marginBottom: 30,
+    // width: '80%',
+    alignSelf: 'center'
+  },
+  sign: {
+    color: 'blue',
+    alignSelf: 'center',
+    paddingTop:10,
+    fontSize:15
+  },
 })

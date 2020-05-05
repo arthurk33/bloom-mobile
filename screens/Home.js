@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component} from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
   // Text,
+  Switch,
   View,
   AsyncStorage
 } from 'react-native'
@@ -10,6 +11,9 @@ import {
 // import { ScrollView } from 'react-native-gesture-handler';
 // import FlashMessage from "react-native-flash-message";
 import SearchForm from './SearchForm';
+import SearchDisplay from './SearchDisplay';
+import StoreDisplay from './StoreDisplay';
+import Login from './Login'
 import { YellowBox } from 'react-native'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Card, CardItem } from 'native-base';
 
@@ -28,8 +32,14 @@ class HomeScreen extends Component {
     super(props);
     this.state = {
       count: 0,
-      user: null
+      user: null,
+      switchValue: false,
     };
+  }
+
+
+  toggleSwitch = (value) => {
+    this.setState({switchValue: value})
   }
 
   // onPress = () => {
@@ -92,10 +102,17 @@ class HomeScreen extends Component {
 
         <Content>
           <Card>
-            <CardItem>
+
               <SearchForm navigation={this.props.navigation}/>
-            </CardItem>
+
           </Card>
+          <View style = {styles.switch}>
+            <Switch
+            onValueChange = {this.toggleSwitch}
+            value = {this.state.switchValue}
+            trackColor={{ false: "#767577", true: "#8794ab" }}
+            />
+         </View>
         </Content>
       </Container>
 
@@ -103,7 +120,7 @@ class HomeScreen extends Component {
       //   <View>
       //     {userSession}
       //   </View>
-        
+
       // </ScrollView>
     )
   }
@@ -204,6 +221,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
+  switch: {
+     alignSelf: 'center',
+     marginTop: 10
+
+  }
 });
 
 export default HomeScreen;

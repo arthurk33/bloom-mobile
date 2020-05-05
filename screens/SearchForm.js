@@ -1,6 +1,6 @@
 // CITATION: https://heartbeat.fritz.ai/build-and-validate-forms-in-react-native-using-formik-and-yup-6489e2dff6a2
 import React, { Fragment } from 'react'
-import { StyleSheet, SafeAreaView, View, Alert, Picker } from 'react-native'
+import { StyleSheet, SafeAreaView, View, Alert, Picker, TouchableHighlight, Text } from 'react-native'
 // import { Button } from 'react-native-elements'
 // import { Formik } from 'formik'
 // import * as Yup from 'yup'
@@ -55,7 +55,7 @@ export default class SearchForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePlaceSelect = this.handlePlaceSelect.bind(this);
   }
- 
+
   onSelectedItemsChange = selectedItemsPassed => {
     this.setState({
       selectedItems: selectedItemsPassed
@@ -90,7 +90,7 @@ export default class SearchForm extends React.Component {
         if(data){
           return data
         }
-      });    
+      });
 
     return response
   }
@@ -120,8 +120,8 @@ export default class SearchForm extends React.Component {
 
     return response
   }
-  
-  
+
+
 
   handleSubmit() {
     if (this.state.address && this.state.address.length > 0 && this.state.selectedItemDistance.length > 0) {
@@ -142,7 +142,7 @@ export default class SearchForm extends React.Component {
       let query = queryString(modifiedState)
       let getPictures = this.getPictures
       let getServices = this.getServices
-      
+
       fetch('http://192.168.1.24:8081/stores' + query, {
         headers: {
           'Content-Type': 'application/json',
@@ -213,24 +213,43 @@ export default class SearchForm extends React.Component {
                 console.log(data)
               }
             }}
-            
+
             getDefaultValue={() => ''}
-            
+
             query={{
               // available options: https://developers.google.com/places/web-service/autocomplete
               key: '',
               language: 'en', // language of the results
             }}
-            
+
             styles={{
               textInputContainer: {
-                margin: 15
+
+              width: '70%',
+              margin: '5%',
+              alignSelf: 'center',
+              backgroundColor: 'rgba(255,255,255,1)',
+              // borderTopWidth: 1,
+              // borderBottomWidth:1,
+              // borderLeftWidth: 1,
+              // borderRightWidth: 1,
+              height: '50%'
+
               },
-              iconStyle: {
-                marginRight: 10
-              }
+              textInput: {
+                // marginLeft: 10,
+                marginRight: 0,
+                height: 25,
+                color: '#5d5d5d',
+                fontSize: 16,
+                alignText: 'center',
+
+              },
+              predefinedPlacesDescription: {
+                color: '#1faadb'
+              },
             }}
-            
+
             currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
             currentLocationLabel="Current location"
             nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
@@ -250,7 +269,8 @@ export default class SearchForm extends React.Component {
             // renderRightButton={() => <Text>Custom text after the input</Text>}
           />
 
-          <View style={{ flex: 1 }}>
+          <View style={{flexDirection: 'row', display: 'flex'}}>
+          <View style={{ flex: 1, alignItems: 'center'}}>
             <MultiSelect
               single={true}
               hideTags
@@ -259,7 +279,7 @@ export default class SearchForm extends React.Component {
               // ref={(component) => { this.multiSelect = component }}
               onSelectedItemsChange={this.onSelectedItemsChangeDistance}
               selectedItems={this.state.selectedItemDistance}
-              selectText="Select Distance"
+              selectText="Distance"
               searchInputPlaceholderText="Within..."
               onChangeInput={ (text)=> console.log(text)}
               // altFontFamily="ProximaNova-Light"
@@ -273,10 +293,16 @@ export default class SearchForm extends React.Component {
               searchInputStyle={{ color: '#CCC' }}
               submitButtonColor="#CCC"
               submitButtonText="Done"
+              iconSearch={(null, null, false)}
+              // styleDropdownMenu={{borderTopRightRadius: 20}}
+              styleDropdownMenuSubsection={{borderRadius: 15, padding: 10, height: 40}}
+              styleMainWrapper={{width: '80%',marginLeft: '15%'}}
+              styleTextDropdown={{paddingLeft: 15}}
+              // styleSelectorContainer={{borderTopRightRadius: 20}}
             />
           </View>
 
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, alignItems: 'center'}}>
             <MultiSelect
               hideTags
               items={categories}
@@ -284,7 +310,7 @@ export default class SearchForm extends React.Component {
               ref={(component) => { this.multiSelect = component }}
               onSelectedItemsChange={this.onSelectedItemsChange}
               selectedItems={this.state.selectedItems}
-              selectText="Select Category"
+              selectText="Category"
               searchInputPlaceholderText="Search Categories..."
               onChangeInput={ (text)=> console.log(text)}
               // altFontFamily="ProximaNova-Light"
@@ -295,22 +321,27 @@ export default class SearchForm extends React.Component {
               selectedItemIconColor="#CCC"
               itemTextColor="#000"
               displayKey="value"
-              searchInputStyle={{ color: '#CCC' }}
+              searchInputStyle={{ color: '#CCC', borderTopRightRadius: 20}}
               submitButtonColor="#CCC"
               submitButtonText="Done"
+              styleDropdownMenuSubsection={{borderRadius: 15, padding: 10, height: 40}}
+              styleMainWrapper={{width: '80%', marginRight: '15%'}}
+              styleTextDropdown={{paddingLeft: 15}}
+
             />
+            </View>
             <View>
               {this.multiSelect && this.multiSelect.getSelectedItemsExt(this.state.selectedItems)}
             </View>
           </View>
 
           <View style={styles.buttonContainer}>
-            <FormButton
-              buttonType='outline'
+            <TouchableHighlight
+
               onPress={this.handleSubmit}
-              title='Search'
-              buttonColor='#039BE5'
-            />
+              // title='Search'
+
+            ><Text style={styles.button}>Search</Text></TouchableHighlight>
           </View>
         </Fragment>
       </SafeAreaView>
@@ -321,11 +352,24 @@ export default class SearchForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#C0CBCF'
   },
   buttonContainer: {
-    margin: 25
+    margin: 25,
+    backgroundColor: '#354A74',
+    width: '30%',
+    alignSelf: 'center',
+    height: '15%',
+    fontSize: 10,
+    borderRadius: 10
+  },
+  button: {
+    fontSize:15,
+    color: 'white',
+    alignSelf: 'center',
+    padding:5
   }
+
 })
 
 
@@ -459,15 +503,15 @@ const styles = StyleSheet.create({
 //               // this.handlePlaceSelect(data)
 //               props.setFieldValue("address", data.description)
 //             }}
-            
+
 //             getDefaultValue={() => ''}
-            
+
 //             query={{
 //               // available options: https://developers.google.com/places/web-service/autocomplete
 //               key: 'AIzaSyBcz_rgnnIcA7JzPU25Ap_CFYhAGeXhCWU',
 //               language: 'en', // language of the results
 //             }}
-            
+
 //             styles={{
 //               textInputContainer: {
 //                 margin: 15
@@ -476,7 +520,7 @@ const styles = StyleSheet.create({
 //                 marginRight: 10
 //               }
 //             }}
-            
+
 //             currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
 //             currentLocationLabel="Current location"
 //             nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch

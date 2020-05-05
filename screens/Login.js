@@ -1,6 +1,6 @@
 // CITATION: https://heartbeat.fritz.ai/build-and-validate-forms-in-react-native-using-formik-and-yup-6489e2dff6a2
 import React, { Fragment } from 'react'
-import { StyleSheet, SafeAreaView, View, Alert } from 'react-native'
+import { StyleSheet, SafeAreaView, View, Alert, Text, TouchableHighlight} from 'react-native'
 import { Button } from 'react-native-elements'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -48,8 +48,9 @@ class Login extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Formik
+
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
           onSubmit={async (values, actions) => {
@@ -62,49 +63,50 @@ class Login extends React.Component {
           {props => (
             <Fragment>
               <FormInput
+                containerStyle={styles.input}
                 name='email'
                 value={props.values.email}
                 onChangeText={props.handleChange('email')}
-                placeholder='Enter email'
+                placeholder='Email'
                 autoCapitalize='none'
                 iconName='mail-forward'
                 iconColor='#2C384A'
                 onBlur={props.handleBlur('email')}
                 autoFocus
+
               />
               <ErrorMessage errorValue={props.touched.email && props.errors.email} />
               <FormInput
+              containerStyle={styles.input}
                 name='password'
                 value={props.values.password}
                 onChangeText={props.handleChange('password')}
-                placeholder='Enter password'
+                placeholder='Password'
                 secureTextEntry
                 iconName='lock'
                 iconColor='#2C384A'
                 onBlur={props.handleBlur('password')}
               />
-              <ErrorMessage errorValue={props.touched.password && props.errors.password} />
+              <ErrorMessage errorValue={props.touched.password && props.errors.password}/>
+
               <View style={styles.buttonContainer}>
-                <FormButton
-                  buttonType='outline'
-                  onPress={props.handleSubmit}
-                  title='LOGIN'
-                  buttonColor='#039BE5'
-                  disabled={!props.isValid || props.isSubmitting}
-                />
+                <TouchableHighlight
+                   onPress={props.handleSubmit}
+                   disabled={!props.isValid || props.isSubmitting}
+                ><Text style={styles.button}>Login</Text></TouchableHighlight>
               </View>
+
             </Fragment>
           )}
         </Formik>
-        <Button
-          title="Don't have an account? Sign Up"
-          onPress={this.goToSignup}
-          titleStyle={{
-            color: '#F57C00'
-          }}
-          type='clear'
-        />
-      </SafeAreaView>
+        <View style={{flexDirection: 'row', flex: 'display', alignSelf: 'center', marginTop: 10}}>
+        <Text style={{alignSelf: 'center', marginTop: 10, fontSize: 15}}> Don't have an account? </Text>
+          <TouchableHighlight
+             onPress={this.goToSignup}
+          ><Text style={styles.sign}>Sign Up</Text></TouchableHighlight>
+          </View>
+
+      </View>
     )
   }
 }
@@ -123,9 +125,34 @@ export default connect(mapStateToProps, mapDispatchToProps)(Login);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#C0CBCF',
+    height: '100%',
+    padding: '15%',
+    paddingTop: '30%'
   },
   buttonContainer: {
-    margin: 25
+    marginTop: '10%',
+    backgroundColor: '#354A74',
+    width: '45%',
+    alignSelf: 'center',
+    height: '10%',
+    fontSize: 8,
+    borderRadius: 30
+  },
+  button: {
+    fontSize:15,
+    color: 'white',
+    alignSelf: 'center',
+    padding: 10
+  },
+  sign: {
+    color: 'blue',
+    alignSelf: 'center',
+    paddingTop:10,
+    fontSize:15
+  },
+  input: {
+    height: 5,
+    marginBottom: 30
   }
 })
